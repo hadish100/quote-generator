@@ -1,0 +1,20 @@
+{
+    "name": "quote-generator",
+    "version": "1.0.0",
+    "manifest_version":3,
+    "author": "hadish",
+	"icons": 
+	{
+        "16": "i.png",
+        "32": "i.png",
+        "48": "i.png",
+        "128": "i.png"
+	},
+
+	"permissions": ["activeTab"],
+
+    "chrome_url_overrides": 
+    {
+        "newtab": "index.html"
+    }
+}
