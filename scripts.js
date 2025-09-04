@@ -16,19 +16,19 @@ function get_random_quote()
 	});
 }
 
-function get_random_image()
+function get_random_poem()
 {
 	return new Promise(function(resolve, reject)
 	{
 		$.ajax
 		({
-			url: 'images.txt',
+			url: 'poems.txt',
 			method: 'GET',
 			success: function(response) 
 			{
-				var images = response.split("\n");
-				var random_image = images[Math.floor(Math.random() * images.length)];
-				resolve(random_image);
+				var poems = response.split("\n");
+				var random_poem = poems[Math.floor(Math.random() * poems.length)];
+				resolve(random_poem);
 			}
 		});
 	});
@@ -36,11 +36,26 @@ function get_random_image()
 
 async function main()
 {
-	var quote = await get_random_quote();
-	var image = await get_random_image();
 
-	$('.message').text(quote);
-	$(".message_container").css("background-image", "url(" + image + ")");
+	if(Math.random() > 0.5)
+	{
+		var quote = await get_random_quote();		
+		$('.message').text(quote);
+		$('.message').css("width","70%")
+	}
+
+	else
+	{
+		var poem = await get_random_poem();
+		
+		$('.message').html(`<div class='pb1'>${poem.split(" - ")[0]}</div><div class='pb2'>${poem.split(" - ")[1]}</div>`);
+		$('.message').css("font-family","nast")
+		$('.message').css("font-size","80px")
+	}
+	
+	$('.message').css("margin-bottom","180px")
+	$(".message_container").css("background-image", "url(1.jpg)");
+
 
 	setTimeout(function()
 	{
