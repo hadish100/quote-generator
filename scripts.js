@@ -1,66 +1,83 @@
-function get_random_quote()
-{
-	return new Promise(function(resolve, reject)
-	{
-		$.ajax
-		({
-			url: 'quotes.txt',
-			method: 'GET',
-			success: function(response) 
-			{
-				var quotes = response.split("\n");
-				var random_quote = quotes[Math.floor(Math.random() * quotes.length)];
-				resolve(random_quote);
-			}
-		});
-	});
+function get_random_quote() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "quotes.txt",
+            method: "GET",
+            success: function (response) {
+                var quotes = response.split("\n");
+                var random_quote =
+                    quotes[Math.floor(Math.random() * quotes.length)];
+                resolve(random_quote);
+            },
+        });
+    });
 }
 
-function get_random_poem()
-{
-	return new Promise(function(resolve, reject)
-	{
-		$.ajax
-		({
-			url: 'poems.txt',
-			method: 'GET',
-			success: function(response) 
-			{
-				var poems = response.split("\n");
-				var random_poem = poems[Math.floor(Math.random() * poems.length)];
-				resolve(random_poem);
-			}
-		});
-	});
+function get_random_poem() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "poems.json",
+            method: "GET",
+            success: function (response) {
+                var poems =
+                    typeof response === "string"
+                        ? JSON.parse(response)
+                        : response;
+
+                var grouped = {};
+                poems.forEach(function (poem) {
+                    if (!grouped[poem.poet]) {
+                        grouped[poem.poet] = [];
+                    }
+                    grouped[poem.poet].push(poem);
+                });
+
+                var poets = Object.keys(grouped);
+
+                var randomPoet =
+                    poets[Math.floor(Math.random() * poets.length)];
+
+                var poetPoems = grouped[randomPoet];
+                var randomPoem =
+                    poetPoems[Math.floor(Math.random() * poetPoems.length)];
+
+                resolve(randomPoem);
+            },
+            error: reject,
+        });
+    });
 }
 
-async function main()
-{
+async function main() {
+    var poem = await get_random_poem();
 
-	if(Math.random() > 0.5)
-	{
-		var quote = await get_random_quote();		
-		$('.message').text(quote);
-		$('.message').css("width","70%")
-	}
+    var content = poem.content.trim();
+    var lines = content.split("\n");
 
-	else
-	{
-		var poem = await get_random_poem();
-		
-		$('.message').html(`<div class='pb1'>${poem.split(" - ")[0]}</div><div class='pb2'>${poem.split(" - ")[1]}</div>`);
-		$('.message').css("font-family","nast")
-		$('.message').css("font-size","80px")
-	}
-	
-	$('.message').css("margin-bottom","180px")
-	$(".message_container").css("background-image", "url(1.jpg)");
+    var html = lines
+        .map((line) => {
+            var parts = line.split(" - ");
+            return `<div class='pb1'>${parts[0]}</div>
+                <div class='pb2'>${parts[1] || ""}</div>`;
+        })
+        .join("");
 
+    $(".message").html(html);
 
-	setTimeout(function()
-	{
-		$(".message_container").css("opacity", "1");
-	},300);
+    if (lines.length > 1) {
+        $(".message").css("font-size", "70px");
+    } else {
+        $(".message").css("font-size", "80px");
+    }
+
+    $(".message").css("font-family", "nast");
+    $(".message").css("margin-bottom", "180px");
+
+    $(".message_container").css("background-image", "url(1.jpg)");
+
+    setTimeout(function () {
+        $(".message_container").css("opacity", "1");
+    }, 300);
 }
 
-main()
+main();

@@ -1,73 +1,70 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>New Tab</title>
+    <head>
+        <title>New Tab</title>
 
-	<style>
-		@font-face 
-		{
-			font-family: 'font';
-			src: url("./font.ttf");
-		}
+        <style>
+            @font-face {
+                font-family: "font";
+                src: url("./font.ttf");
+            }
 
-		@font-face 
-		{
-			font-family: 'nast';
-			src: url("./font2.ttf");
-		}
+            @font-face {
+                font-family: "nast";
+                src: url("./font2.ttf");
+            }
 
+            body {
+                width: 100%;
+                height: 100vh;
+                padding: 0;
+                margin: 0;
+            }
 
-		body
-		{
-			width:100%;
-			height:100vh;
-			padding:0;
-			margin:0;			
-		}
+            .message_container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+                flex-direction: row;
+                width: 100%;
+                height: 100vh;
+                padding: 0;
+                margin: 0;
+                background-size: cover;
+                font-size: 40px;
+                text-align: center;
+                opacity: 0;
+                transition: all 0.5s;
+            }
 
-		.message_container
-		{
-			display:flex;
-			justify-content:center;
-			align-items:center;
-			align-content:center;
-			flex-direction:row;
-			width:100%;
-			height:100vh;
-			padding:0;
-			margin:0;
-			background-size: cover;
-			font-size:40px;
-			text-align: center;
-			opacity:0;
-			transition:all 0.5s;
-		}
-		
-		.message
-		{
-			margin:30px;
-			color:black;
-			font-family: 'font';
-		}
+            .message {
+                margin: 30px;
+                color: black;
+                font-family: "font";
+            }
 
-		.pb1
-		{
-			margin-left:300px;
-		}
+            .pb1 {
+                margin-left: 300px;
+            }
 
-		.pb2
-		{
-			margin-right:300px;
-		}
+            .pb2 {
+                margin-right: 300px;
+            }
 
-	</style>
-</head>
-<body>
-	<div class="message_container">
-		<div class="message"></div>
-	</div>
+            .poet_container {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="message_container">
+            <div class="message"></div>
+        </div>
 
-    <script src="jquery.js"></script>
-    <script src="scripts.js"></script>
-</body>
+        <script src="jquery.js"></script>
+        <script src="scripts.js"></script>
+    </body>
 </html>
